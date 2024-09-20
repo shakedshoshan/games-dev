@@ -1,0 +1,54 @@
+1. Pictionary (Drawing Guessing Game)
+Players: 2 or more.
+Gameplay:
+One player is given a random word and has to draw something to represent that word (in this case, using a static image or a drawn image).
+Other players guess the word based on the image. They can type their guesses.
+The system checks if the guessed word matches the original word.
+Points are awarded for correct guesses, and players take turns drawing.
+Tech stack:
+
+Frontend: React (with Canvas for drawing)
+Backend: Node.js (WebSocket for real-time communication)
+Database: MongoDB (to store players’ data, scores, and words)
+Real-time: Socket.IO or WebSockets
+
+
+8. Would You Rather
+Players: 2 or more.
+Gameplay:
+Each player takes turns answering a "Would you rather" question (e.g., "Would you rather fight 100 duck-sized horses or 1 horse-sized duck?").
+Other players guess what choice the answering player will make.
+Points are given to those who guess correctly.
+The game can get hilariously bizarre with the right questions!
+Tech stack:
+
+Frontend: React (with predefined questions and answers)
+Backend: Node.js
+Real-time: Socket.IO for live multiplayer interaction
+
+
+12. Emoji Stories
+Players: 2 or more.
+Gameplay:
+Players take turns creating a story using only emojis.
+Each player adds a few emojis to continue the story, and everyone has to guess what’s happening.
+After a set number of turns, the full emoji story is revealed, and players share their interpretations, often resulting in funny miscommunications!
+Tech stack:
+
+Frontend: React (with emoji picker functionality)
+Backend: Node.js
+Real-time: Socket.IO for live multiplayer interaction
+Database: MongoDB (to store emoji sequences and stories)
+
+16. Fill in the Blanks (Mad Libs Style)
+Players: 2 or more.
+Gameplay:
+The game provides sentences with blanks (e.g., "The [noun] jumped over the [adjective] [noun].").
+Players take turns filling in the blanks with random words.
+Once all blanks are filled, the sentence is revealed, often with funny and nonsensical results.
+Points can be awarded for the funniest, most creative, or even the most absurd sentence.
+Tech stack:
+
+Frontend: React
+Backend: Node.js (to handle word submission)
+Database: MongoDB (to store sentences and words)
