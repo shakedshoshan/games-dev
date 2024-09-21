@@ -6,8 +6,8 @@ import cors from 'cors';
 
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import authRoutes from "./routes/auth.routes.js";
-const app = express();
-// import { app, server } from "./socket/socket.js";
+// const app = express();
+import { app, server } from "./socket/socket.js";
 
 dotenv.config();
 
@@ -33,7 +33,7 @@ app.use("/api/auth", authRoutes);
 // });
 
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
 	connectToMongoDB();
 	console.log(`Server Running on port ${PORT}`);
 });
