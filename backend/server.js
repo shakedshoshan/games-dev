@@ -6,8 +6,10 @@ import cors from 'cors';
 
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import authRoutes from "./routes/auth.routes.js";
-// const app = express();
-import { app, server } from "./socket/socket.js";
+import gameRoutes from "./routes/game.routes.js";
+import fillBlanckRoutes from "./routes/fillBlanck.routes.js";
+const app = express();
+// import { app, server } from "./socket/socket.js";
 
 dotenv.config();
 
@@ -25,6 +27,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/game", gameRoutes);
+app.use("/api/fillBlanck", fillBlanckRoutes);
 
 // app.use(express.static(path.join(__dirname, "/frontend/dist")));
 
@@ -33,7 +37,7 @@ app.use("/api/auth", authRoutes);
 // });
 
 
-server.listen(PORT, () => {
+app.listen(PORT, () => {
 	connectToMongoDB();
 	console.log(`Server Running on port ${PORT}`);
 });

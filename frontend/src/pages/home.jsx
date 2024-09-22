@@ -1,11 +1,13 @@
 import React from 'react'
-import LogoutButton from '../components/LogoutButton.jsx'
+import { useAuthContext } from '../context/AuthContext.jsx'
+import { StartGameComponent } from '../components/start-game.jsx'
 
 function home() {
+  // const { authUser } = useAuthContext();
+
   return (
     <div>
-      <LogoutButton />
-      <h1 className='text-white text-5xl'>home</h1>
+      <StartGameComponent/>
     </div>
     
   )

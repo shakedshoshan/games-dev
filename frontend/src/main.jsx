@@ -11,9 +11,9 @@ createRoot(document.getElementById('root')).render(
   <React.StrictMode>
 		<BrowserRouter>
 			<AuthContextProvider>
-				<SocketContextProvider>
+				{/* <SocketContextProvider> */}
 					<App />
-				</SocketContextProvider>
+				{/* </SocketContextProvider> */}
 			</AuthContextProvider>
 		</BrowserRouter>
 	</React.StrictMode>

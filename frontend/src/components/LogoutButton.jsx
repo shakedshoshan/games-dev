@@ -9,8 +9,8 @@ const LogoutButton = () => {
 			{!loading ? (
                 <div className="flex flex-row"  >
 					<button className="flex flex-row" onClick={logout}>
-						<BiLogOut className='ml-2 w-6 h-6 text-white cursor-pointer'  />
-						<span className='text-white '>Logout</span>
+						<BiLogOut className='ml-2 w-6 h-6 cursor-pointer'  />
+						<span className=' '>Logout</span>
 					</button>
                 </div>
 				
