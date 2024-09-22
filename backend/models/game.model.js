@@ -8,16 +8,17 @@ const gameSchema = new mongoose.Schema({
   },
   players: [{ 
     name: String, 
-    socketId: String 
+    socketId: String,
+    profilePic: String 
   }],
   sentences: [{ 
     type: String, 
     required: true 
   }],
-  filledSentence: { 
-    type: String, 
-    default: '' 
-  },
+  filledSentence: [{ 
+    name: String,
+    fillIn: String
+  }],
   currentPlayerIndex: { 
     type: Number, 
     default: 0 

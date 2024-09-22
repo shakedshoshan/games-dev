@@ -42,13 +42,13 @@ const handleSubmit = async (event) => {
   if (modalType === 'join') {
     const gameCode = formData.get('gameCode');
     // const playerName = formData.get('playerName');
-    await joinGame(authUser.fullName, gameCode);
+    await joinGame(authUser, gameCode);
     if (gameData) {
       console.log('Joined game:', gameData);
     }
   } else {
-    const gameName = formData.get('gameName'); 
-    await createGame(authUser.fullName, gameName);
+    const gameName = formData.get('gameName');
+    await createGame(authUser, gameName);
     if (gameCode) {
       console.log('Created game with code:', gameCode);
     }
