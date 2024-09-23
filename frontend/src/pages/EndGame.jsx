@@ -2,10 +2,10 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { ScoreTable } from '../components/fillBlanckGame/score-table';
+import { LeaderboardPodium } from '../components/leaderboard-podium';
 
 
-export const FillBlankGameRun3 = () => {
+export const EndGame = () => {
     const { id } = useParams();
     const [game, setGame] = useState([]);
     const [currentRound, setCurrentRound] = useState(0);
@@ -32,7 +32,7 @@ export const FillBlankGameRun3 = () => {
       }, [id]);
   return (
     <div className='w-full'>
-        <ScoreTable game={game} round={currentRound} maxRound={maxRound} gameId={gameId}/>
+        <LeaderboardPodium game={game} gameId={gameId} />
     </div>
   )
 }

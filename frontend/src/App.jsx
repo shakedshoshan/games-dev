@@ -10,6 +10,7 @@ import { FillBlankGame } from "./pages/fillBlanckGame";
 import { FillBlankGameRun } from "./pages/fillBlanckGameRun.jsx";
 import { FillBlankGameRun2 } from "./pages/fillBlanckGameRun2.jsx";
 import { FillBlankGameRun3 } from "./pages/fillBlanckGameRun3.jsx";
+import { EndGame } from "./pages/EndGame.jsx";
 
 function App() {
 	const { authUser } = useAuthContext();
@@ -23,6 +24,7 @@ function App() {
 					<Route path='home/fillBlanckGameRun/:id' element={authUser ? <FillBlankGameRun /> : <Navigate to={"/login"} />} />
 					<Route path='home/fillBlanckGameRun2/:id' element={authUser ? <FillBlankGameRun2 /> : <Navigate to={"/login"} />} />
 					<Route path='home/fillBlanckGameRun3/:id' element={authUser ? <FillBlankGameRun3 /> : <Navigate to={"/login"} />} />
+					<Route path='home/EndGame/:id' element={authUser ? <EndGame /> : <Navigate to={"/login"} />} />
 					<Route path='/login' element={authUser ? <Navigate to='/home' /> : <Login />} />
 					<Route path='/signup' element={authUser ? <Navigate to='/home' /> : <SignUp />} />
 				</Routes>

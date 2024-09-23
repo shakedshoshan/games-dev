@@ -115,11 +115,10 @@ export const getGameDetails = async (req, res) => {
 // Insert an answer to filledSentences
 export const insertFilledSentence = async (req, res) => {
   const { gameId, playerName, fillIn } = req.body;
-  console.log(gameId, playerName, fillIn);
+  
 
   try {
     const game = await Game.findById(gameId);
-    console.log(game);
 
     if (game) {
       // Add the filled sentence to the filledSentences array
@@ -223,4 +222,41 @@ export const updatePlayerScore = async (req, res) => {
     res.status(500).json({ message: 'Error updating player score', error });
   }
 };
+
+
+export const incrementCurrentPlayerIndex = async (req, res) => {
+  const { gameId } = req.body;
+
+  try {
+    const game = await Game.findById(gameId);
+    if (!game) {
+      return res.status(404).json({ message: 'Game not found' });
+    }
+
+    game.currentPlayerIndex += 1;
+
+    await game.save();
+
+    res.json({ message: 'Current player index incremented successfully', currentPlayerIndex: game.currentPlayerIndex });
+  } catch (error) {
+    res.status(500).json({ message: 'Error incrementing current player index', error });
+  }
+};
+
+export const deleteGame = async (req, res) => {
+  const { gameId } = req.body;
+
+  try {
+    const game = await Game.findByIdAndDelete(gameId);
+    if (!game) {
+      return res.status(404).json({ message: 'Game not found' });
+    }
+
+    res.json({ message: 'Game deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting game', error });
+  }
+};
+
+
 

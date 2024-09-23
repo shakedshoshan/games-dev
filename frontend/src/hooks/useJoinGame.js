@@ -16,9 +16,10 @@ const useJoinGame = () => {
         gameCode: gameCode,
         profilePic: player.profilePic
       });
+      console.log(response.data);
       setGameData(response.data);
       toast.success('Successfully joined the game!');
-      navigate(`home/fillBlanckGame/${response.data._id}`);
+      navigate(`/home/fillBlanckGame/${response.data.game._id}`);
     } catch (err) {
       toast.error(err.response?.data?.message || 'An error occurred while joining the game');
     } finally {

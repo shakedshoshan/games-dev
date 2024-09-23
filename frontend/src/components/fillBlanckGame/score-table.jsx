@@ -2,8 +2,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { motion } from "framer-motion"
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-export function ScoreTable({ game }) {
+
+export function ScoreTable({ game, round, maxRound, gameId }) {
+  
+  const navigate = useNavigate();
 
   function sortObjectByValue(obj) {
     // Convert the object into an array of [key, value] pairs
@@ -16,12 +21,22 @@ export function ScoreTable({ game }) {
     const sortedObj = Object.fromEntries(objEntries);
     
     return sortedObj;
-}
+  }
   const scores = sortObjectByValue(game);
 
   const handleContinue = () => {
-    // Add your logic here for what should happen when continue is pressed
-    console.log("Continue button pressed")
+    if (round >= maxRound-1) {
+      navigate(`/home/EndGame/${gameId}`);
+    } else {
+      axios.post('http://localhost:5000/api/game/increment-current-player-index', { gameId: gameId })
+        .then(response => {
+          console.log('Current player index incremented successfully:', response.data);
+        })
+        .catch(error => {
+          console.error('Error incrementing current player index:', error);
+        });
+      navigate(`/home/fillBlanckGameRun/${gameId}`);
+    }
   }
 
   const getRowStyle = (index) => {
@@ -39,7 +54,8 @@ export function ScoreTable({ game }) {
 
   return (
     <div className="max-w-md mx-auto p-4 space-y-6">
-      <h2 className="text-2xl font-bold text-center mb-4">Score Table</h2>
+      <h2 className="text-2xl font-bold text-center mb-1">Score Table</h2>
+      <span className="text-sm font-semibold text-center mb-4">Round { round + 1 } / { maxRound }</span>
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
