@@ -63,7 +63,7 @@ export const FillInAnswers = ({sentence = "", gameId = ""}) => {
               placeholder="Enter a new string"
               className="w-full" />
             <div className="flex items-center justify-between space-x-2">
-              <Button type="submit" className="flex-grow">
+              <Button type="submit" className="flex-grow bg-blue-600 hover:bg-blue-800">
                 Update & Continue
               </Button>
               <div

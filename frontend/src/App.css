@@ -1,8 +1,12 @@
 #root {
   max-width: 1600px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0 2rem; /* Adjust padding to only apply to the sides and top */
   text-align: center;
+  min-height: 100vh; /* Ensure the root element takes up the full height of the viewport */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align content to the top */
 }
 
 .logo {

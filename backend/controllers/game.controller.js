@@ -182,7 +182,7 @@ export const removeFilledSentences = async (req, res) => {
 
 
 export const updatePlayerScore = async (req, res) => {
-  const { gameId, fullName, string } = req.body;
+  const { gameId, string } = req.body;
 
   try {
     // Check if the game exists
@@ -192,16 +192,19 @@ export const updatePlayerScore = async (req, res) => {
     }
 
     // Check if the fullName exists in game.players
-    const player = game.players.find(player => player.fullName === fullName);
-    if (!player) {
-      return res.status(404).json({ message: 'Player not found in this game' });
-    }
+    // const player = game.players.find(player => player.name === fullName);
+    // if (!player) {
+    //   return res.status(404).json({ message: 'Player not found in this game' });
+    // }
 
     // Verify that the provided string matches the player's specific field (assuming 'identifier')
     // Replace 'identifier' with the actual field name you intend to match with 'string'
-    if (player.identifier !== string) {
+    const playerAnswer = game.filledSentence.find(player => player.fillIn === string);
+    if (!playerAnswer) {
       return res.status(400).json({ message: 'Provided string does not match the player\'s identifier' });
     }
+    // console.log(playerAnswer.name);
+    // console.log(game.scores.get(playerAnswer.name))
 
     // Initialize scores object if it doesn't exist
     if (!game.scores) {
@@ -209,11 +212,8 @@ export const updatePlayerScore = async (req, res) => {
     }
 
     // Increment the player's score by 1
-    if (game.scores.hasOwnProperty(fullName)) {
-      game.scores[fullName] += 1;
-    } else {
-      game.scores[fullName] = 1;
-    }
+    game.scores.set(playerAnswer.name, game.scores.get(playerAnswer.name) + 1)
+    
 
     // Save the updated game
     await game.save();
