@@ -1,16 +1,18 @@
-import React from 'react'
-//import { useAuthContext } from '../context/AuthContext.jsx'
-import { StartGameComponent } from '../components/start-game.jsx'
 
-function home() {
-  // const { authUser } = useAuthContext();
+ // Start of Selection
+import React, { useEffect, useContext, useState } from 'react';
+import { StartGameComponent } from '../components/start-game.jsx';
+import {useSocket} from '../hooks/useSocket';
+
+function Home() {
+
 
   return (
     <div>
-      <StartGameComponent/>
+      <StartGameComponent />
+
     </div>
-    
-  )
+  );
 }
 
-export default home
+export default Home

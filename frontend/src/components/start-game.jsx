@@ -20,8 +20,6 @@ export function StartGameComponent() {
   const [modalType, setModalType] = useState(null)
   const { authUser } = useAuthContext();
   
-  
-
 
   const handleOpenModal = (type) => {
     setModalType(type)

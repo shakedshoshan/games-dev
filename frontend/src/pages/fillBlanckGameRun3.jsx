@@ -1,8 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { ScoreTable } from '../components/fillBlanckGame/score-table';
+import { AuthContext } from '../context/AuthContext';
+import ExitButton from '../components/ExitButton';
 
 
 
@@ -12,6 +14,7 @@ export const FillBlankGameRun3 = () => {
     const [currentRound, setCurrentRound] = useState(0);
     const [maxRound, setMaxRound] = useState(0);
     const [gameId, setGameId] = useState("");
+    const { authUser } = useContext(AuthContext); // Get authUser from AuthContext
 
     // const [gameId, setGameId] = useState("");
 
@@ -43,6 +46,7 @@ export const FillBlankGameRun3 = () => {
   return (
     <div className='w-full'>
         <ScoreTable game={game} round={currentRound} maxRound={maxRound} gameId={gameId}/>
+        <ExitButton gameId={gameId} player={authUser} />
     </div>
   )
 }

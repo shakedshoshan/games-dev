@@ -14,11 +14,11 @@ const Login = () => {
 	};
 
 	return (
-		<div className='flex flex-col justify-center min-w-96 mx-auto   text-white '>
-			<div className='w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 space-y-10'>
-				<h1 className='text-3xl font-semibold text-center text-gray-300'>
+		<div className='flex flex-col justify-center min-w-80 mx-auto rounded-lg text-white bg-[#2e2c47] '>
+			<div className='w-80 p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 space-y-10'>
+				<h1 className='text-3xl font-semibold text-center text-gray-100'>
 					Login
-					<span className='text-blue-500'> ChatApp</span>
+					<span className='text-blue-600'> SocialGames</span>
 				</h1>
 
 				<form onSubmit={handleSubmit} className="space-y-4 rounded-lg">

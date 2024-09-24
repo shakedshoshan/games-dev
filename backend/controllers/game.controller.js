@@ -302,11 +302,14 @@ export const playAgain = async (req, res) => {
       return res.status(404).json({ message: 'Game not found' });
     }
 
+    const count = game.sentences.length;
+
     const response = await fetch(`http://localhost:5000/api/fillBlanck/${count}`);
     if (!response.ok) {
       throw new Error('Failed to fetch sentences');
     }
     const sentences = await response.json();
+    
 
     // Remove everything except the gameCode
     game.players = [{ name: playerName, socketId: '', profilePic: profilePic }];
@@ -322,6 +325,31 @@ export const playAgain = async (req, res) => {
     res.status(500).json({ message: 'Error resetting game', error });
   }
 };
+
+ // Start Generation Here
+ export const removePlayer = async (req, res) => {
+   const { gameId, fullName } = req.body;
+
+   try {
+     const game = await Game.findById(gameId);
+     if (!game) {
+       return res.status(404).json({ message: 'Game not found' });
+     }
+
+     const playerIndex = game.players.findIndex(player => player.name === fullName);
+     if (playerIndex === -1) {
+       return res.status(404).json({ message: 'Player not found in this game' });
+     }
+
+     game.players.splice(playerIndex, 1);
+
+     await game.save();
+
+     res.json({ message: 'Player removed successfully' });
+   } catch (error) {
+     res.status(500).json({ message: 'Error removing player', error });
+   }
+ };
 
 
 

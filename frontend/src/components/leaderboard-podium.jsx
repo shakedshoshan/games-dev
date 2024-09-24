@@ -4,6 +4,7 @@ import { useWindowSize } from 'react-use'
 import { Button } from "@/components/ui/button"
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
+import ExitButton from './ExitButton';
 
 export function LeaderboardPodium({game, gameId, player }) {
   const navigate = useNavigate();
@@ -95,7 +96,7 @@ export function LeaderboardPodium({game, gameId, player }) {
           ) : (
             <div className="flex flex-col items-center">
               <div className="text-lg text-black font-semibold mb-2"></div>
-              <div className="w-20 h-20 bg-gray-300 rounded-t-lg shadow-md flex items-center justify-center">
+              <div className="w-20 h-20 bg-yellow-500 rounded-t-lg shadow-md flex items-center justify-center">
                 <span className="text-2xl font-bold text-gray-700"></span>
               </div>
               <div className="text-2xl mt-2">🥉</div>
@@ -134,26 +135,15 @@ export function LeaderboardPodium({game, gameId, player }) {
           axios.post('http://localhost:5000/api/game/play-again', { gameId: gameId, playerName: player.fullName, profilePic: player.profilePic })
             .then(response => {
               console.log('Game reset successfully:', response.data);
-              navigate(`/home/fillBlanckGameRun/${gameId}`);
+              navigate(`/home/fillBlanckGame/${gameId}`);
             })
             .catch(error => {
               console.error('Error resetting game:', error);
             });
-        }} variant="outline">
+        }} variant="" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-800">
           Play Again
         </Button>
-        <Button onClick={() => {
-          axios.post('http://localhost:5000/api/game/delete-game', { gameId: gameId, name: player.fullName })
-            .then(response => {
-              console.log('Game deleted successfully:', response.data);
-              navigate('/');
-            })
-            .catch(error => {
-              console.error('Error deleting game:', error);
-            });
-        }} variant="">
-          Exit
-        </Button>
+        <ExitButton gameId={gameId} player={player} />
       </div>
     </div>)
   );

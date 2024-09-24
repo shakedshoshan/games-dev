@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext'; // Import AuthContext
+import {useSocket} from '../hooks/useSocket';
 
 export const FillBlankGame = () => {
   const [players, setPlayers] = useState([]);
@@ -9,6 +10,8 @@ export const FillBlankGame = () => {
   const { id } = useParams();
   const { authUser } = useContext(AuthContext); // Get authUser from AuthContext
   const navigate = useNavigate();
+  const playerCount = useSocket(`http://localhost:5000`);
+  console.log(playerCount);
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -24,6 +27,10 @@ export const FillBlankGame = () => {
     fetchPlayers();
   }, [id]);
 
+//   const filteredPlayers = playerCount.filter(player => 
+//     players.some(gamePlayer => gamePlayer.name === player.username)
+//   );
+//   console.log(filteredPlayers);
   // Check if the current user is the first player
   const isFirstPlayer = players.length > 0 && authUser && players[0].name === authUser.fullName;
 
@@ -45,12 +52,22 @@ export const FillBlankGame = () => {
         <h1 className='text-1xl font-bold mb-4'>Players:</h1>
         {players.length > 0 ? (
           <ul className='space-y-2'>
-            {players.map((player) => (
+            {/* {players.map((player) => (
               <li key={player._id} className='flex items-center space-x-4'>
                 <img src={player.profilePic} alt={`${player.name}'s profile`} className='w-10 h-10 rounded-full' />
                 <span className='text-lg text-black'>{player.name}</span>
               </li>
-            ))}
+            ))} */}
+            {playerCount.length > 0 ? (
+              playerCount.map((player) => (
+                <li key={player.id} className='flex items-center space-x-4'>
+                  {/* <img src={player.profilePic} alt={`${player.name}'s profile`} className='w-10 h-10 rounded-full' /> */}
+                  <span className='text-lg text-black'>{player}</span>
+                </li>
+              ))
+            ) : (
+              <p className='text-gray-500'>No players have joined yet.</p>
+            )}
           </ul>
         ) : (
           <p className='text-gray-500'>No players have joined yet.</p>
@@ -70,4 +87,3 @@ export const FillBlankGame = () => {
   );
 }
 
-// export default FillBlankGame;
