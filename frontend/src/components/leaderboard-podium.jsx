@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button"
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 
-export function LeaderboardPodium({game, gameId}) {
+export function LeaderboardPodium({game, gameId, player }) {
   const navigate = useNavigate();
+  //console.log(name);
   
   function sortObjectByValue(obj) {
     // Convert the object into an array of [key, value] pairs
@@ -129,14 +130,23 @@ export function LeaderboardPodium({game, gameId}) {
         </table>
       </div>
       <div className="flex justify-center space-x-4">
-        <Button onClick={handlePlayAgain} variant="outline">
+        <Button onClick={() => {
+          axios.post('http://localhost:5000/api/game/play-again', { gameId: gameId, playerName: player.fullName, profilePic: player.profilePic })
+            .then(response => {
+              console.log('Game reset successfully:', response.data);
+              navigate(`/home/fillBlanckGameRun/${gameId}`);
+            })
+            .catch(error => {
+              console.error('Error resetting game:', error);
+            });
+        }} variant="outline">
           Play Again
         </Button>
         <Button onClick={() => {
-          axios.post('http://localhost:5000/api/game/delete-game', { gameId: gameId })
+          axios.post('http://localhost:5000/api/game/delete-game', { gameId: gameId, name: player.fullName })
             .then(response => {
               console.log('Game deleted successfully:', response.data);
-              navigate('/home');
+              navigate('/');
             })
             .catch(error => {
               console.error('Error deleting game:', error);

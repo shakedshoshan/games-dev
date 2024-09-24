@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { ScoreTable } from '../components/fillBlanckGame/score-table';
 
 
+
 export const FillBlankGameRun3 = () => {
     const { id } = useParams();
     const [game, setGame] = useState([]);
@@ -27,8 +28,17 @@ export const FillBlankGameRun3 = () => {
             console.error('Error fetching players:', error);
           }
         };
+
+        const clearFilledSentences = async () => {
+          try {
+            await axios.post(`http://localhost:5000/api/game/clear-filled-sentences`, { gameId: id });
+          } catch (error) {
+            console.error('Error clearing filled sentences:', error);
+          }
+        };  
     
         fetchGame();
+        clearFilledSentences();
       }, [id]);
   return (
     <div className='w-full'>

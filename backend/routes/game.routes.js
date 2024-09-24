@@ -1,5 +1,5 @@
 import express from 'express';
-import { createGame, joinGame, exitGame, getGameDetails, removeFilledSentences, insertFilledSentence, initializeScores, updatePlayerScore, incrementCurrentPlayerIndex, deleteGame } from '../controllers/game.controller.js';
+import { createGame, joinGame, exitGame, getGameDetails, removeFilledSentences, insertFilledSentence, initializeScores, updatePlayerScore, incrementCurrentPlayerIndex, deleteGame, playAgain, clearFilledSentences } from '../controllers/game.controller.js';
 
 const router = express.Router();
 
@@ -32,6 +32,12 @@ router.post('/increment-current-player-index', incrementCurrentPlayerIndex);
 
 // Route for deleting a game
 router.post('/delete-game', deleteGame);
+
+// Route for clearing filled sentences
+router.post('/clear-filled-sentences', clearFilledSentences);
+
+// Route for resetting the game
+router.post('/play-again', playAgain);
 
 
 

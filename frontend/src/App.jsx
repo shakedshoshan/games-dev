@@ -19,14 +19,14 @@ function App() {
 			{authUser && <Header userName={authUser.fullName} userImage={authUser.profilePic} />}
 			<div className='flex-grow p-4 flex items-center justify-center'>
 				<Routes>
-					<Route path='/home' element={authUser ? <Home /> : <Navigate to={"/login"} />} />
-					<Route path='home/fillBlanckGame/:id' element={authUser ? <FillBlankGame /> : <Navigate to={"/login"} />} />
-					<Route path='home/fillBlanckGameRun/:id' element={authUser ? <FillBlankGameRun /> : <Navigate to={"/login"} />} />
-					<Route path='home/fillBlanckGameRun2/:id' element={authUser ? <FillBlankGameRun2 /> : <Navigate to={"/login"} />} />
-					<Route path='home/fillBlanckGameRun3/:id' element={authUser ? <FillBlankGameRun3 /> : <Navigate to={"/login"} />} />
-					<Route path='home/EndGame/:id' element={authUser ? <EndGame /> : <Navigate to={"/login"} />} />
-					<Route path='/login' element={authUser ? <Navigate to='/home' /> : <Login />} />
-					<Route path='/signup' element={authUser ? <Navigate to='/home' /> : <SignUp />} />
+					<Route path='/' element={authUser ? <Home /> : <Navigate to={"/login"} />} />
+					<Route path='/home/fillBlanckGame/:id' element={authUser ? <FillBlankGame /> : <Navigate to={"/login"} />} />
+					<Route path='/home/fillBlanckGameRun/:id' element={authUser ? <FillBlankGameRun /> : <Navigate to={"/login"} />} />
+					<Route path='/home/fillBlanckGameRun2/:id' element={authUser ? <FillBlankGameRun2 /> : <Navigate to={"/login"} />} />
+					<Route path='/home/fillBlanckGameRun3/:id' element={authUser ? <FillBlankGameRun3 /> : <Navigate to={"/login"} />} />
+					<Route path='/home/EndGame/:id' element={authUser ? <EndGame /> : <Navigate to={"/login"} />} />
+					<Route path='/login' element={authUser ? <Navigate to='/' /> : <Login />} />
+					<Route path='/signup' element={authUser ? <Navigate to='/' /> : <SignUp />} />
 				</Routes>
 			</div>
 			<Toaster />

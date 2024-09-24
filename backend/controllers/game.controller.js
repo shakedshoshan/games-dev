@@ -244,19 +244,86 @@ export const incrementCurrentPlayerIndex = async (req, res) => {
 };
 
 export const deleteGame = async (req, res) => {
-  const { gameId } = req.body;
-
+  const { gameId, name } = req.body;
+  //console.log(name);
   try {
-    const game = await Game.findByIdAndDelete(gameId);
+    const game = await Game.findById(gameId);
+    
     if (!game) {
       return res.status(404).json({ message: 'Game not found' });
     }
 
-    res.json({ message: 'Game deleted successfully' });
+    // Check if the player exists in the game
+    const playerIndex = game.players.findIndex(player => player.name === name);
+    if (playerIndex !== -1) {
+      // Remove the player from the game
+      game.players.splice(playerIndex, 1);
+      await game.save();
+    }
+
+    // If no players are left in the game, delete the game
+    if (game.players.length === 0) {
+      await Game.findByIdAndDelete(gameId);
+      return res.json({ message: 'Game deleted successfully' });
+    }
+
+    res.json({ message: 'Player removed successfully', players: game.players });
   } catch (error) {
     res.status(500).json({ message: 'Error deleting game', error });
   }
 };
+
+export const clearFilledSentences = async (req, res) => {
+  const { gameId } = req.body;
+
+  try {
+    const game = await Game.findById(gameId);
+    if (!game) {
+      return res.status(404).json({ message: 'Game not found' });
+    }
+
+    game.filledSentence = [];
+
+    await game.save();
+
+    res.json({ message: 'Filled sentences cleared successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error clearing filled sentences', error });
+  }
+};
+
+
+export const playAgain = async (req, res) => {
+  const { gameId, playerName, profilePic } = req.body;
+
+  try {
+    const game = await Game.findById(gameId);
+    if (!game) {
+      return res.status(404).json({ message: 'Game not found' });
+    }
+
+    const response = await fetch(`http://localhost:5000/api/fillBlanck/${count}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch sentences');
+    }
+    const sentences = await response.json();
+
+    // Remove everything except the gameCode
+    game.players = [{ name: playerName, socketId: '', profilePic: profilePic }];
+    game.sentences = sentences;
+    game.filledSentence = [];
+    game.currentPlayerIndex = 0;
+    game.scores = new Map();
+
+    await game.save();
+
+    res.json({ message: 'Game reset successfully', game });
+  } catch (error) {
+    res.status(500).json({ message: 'Error resetting game', error });
+  }
+};
+
+
 
 
 

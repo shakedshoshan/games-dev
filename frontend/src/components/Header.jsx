@@ -17,7 +17,7 @@ export default function Header({ userName = "John Doe", userImage = "/vite.svg" 
               <span className="text-2xl font-bold text-primary-foreground">Logo</span>
             </div> */}
             {/* You can replace the div above with an Image component when you have a logo */}
-            <a href="/home">
+            <a href="/">
               <img src="/games_icon.png" alt="Logo" width={48} height={48} className="rounded-full transition-transform hover:scale-110" />
             </a>
           </div>

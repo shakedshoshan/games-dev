@@ -1,16 +1,17 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { LeaderboardPodium } from '../components/leaderboard-podium';
+import { AuthContext } from '../context/AuthContext';
 
 
 export const EndGame = () => {
     const { id } = useParams();
     const [game, setGame] = useState([]);
-    const [currentRound, setCurrentRound] = useState(0);
-    const [maxRound, setMaxRound] = useState(0);
     const [gameId, setGameId] = useState("");
+    const { authUser } = useContext(AuthContext); // Get authUser from AuthContext
+    
 
     // const [gameId, setGameId] = useState("");
 
@@ -20,8 +21,8 @@ export const EndGame = () => {
           try {
             const response = await axios.get(`http://localhost:5000/api/game/details/${id}`);
             setGame(response.data.game.scores);
-            setCurrentRound(response.data.game.currentPlayerIndex);
-            setMaxRound(response.data.game.sentences.length);
+            // setCurrentRound(response.data.game.currentPlayerIndex);
+            // setMaxRound(response.data.game.sentences.length);
             setGameId(response.data.game._id);
           } catch (error) {
             console.error('Error fetching players:', error);
@@ -32,7 +33,7 @@ export const EndGame = () => {
       }, [id]);
   return (
     <div className='w-full'>
-        <LeaderboardPodium game={game} gameId={gameId} />
+        <LeaderboardPodium game={game} gameId={gameId} player={authUser} />
     </div>
   )
 }
