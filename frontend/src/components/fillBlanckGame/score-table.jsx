@@ -28,6 +28,7 @@ export function ScoreTable({ game, round, maxRound, gameId }) {
     if (round >= maxRound-1) {
       navigate(`/home/EndGame/${gameId}`);
     } else {
+      
       axios.post('http://localhost:5000/api/game/increment-current-player-index', { gameId: gameId })
         .then(response => {
           console.log('Current player index incremented successfully:', response.data);

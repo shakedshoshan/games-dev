@@ -7,11 +7,12 @@ export const useSocket = (url) => {
   const [playerCount, setPlayerCount] = useState(0);
   
   useEffect(() => {
-    if (!url || !authUser) return;
+    if (!url || !authUser || !authUser.fullName) return;
 
     const socket = io("http://localhost:5000", {
       query: {
-        username: authUser.fullName
+        username: authUser.fullName,
+        url: window.location.href
       }
     });
 
@@ -23,8 +24,7 @@ export const useSocket = (url) => {
     return () => {
       socket.disconnect();
     };
-  }, [authUser.fullName, url]);
+  }, [authUser, url]);
 
-  console.log(playerCount);
   return playerCount;
 }

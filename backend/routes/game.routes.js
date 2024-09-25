@@ -1,5 +1,5 @@
 import express from 'express';
-import { createGame, joinGame, exitGame, getGameDetails, removeFilledSentences, insertFilledSentence, initializeScores, updatePlayerScore, removePlayer, incrementCurrentPlayerIndex, deleteGame, playAgain, clearFilledSentences } from '../controllers/game.controller.js';
+import { createGame, joinGame, exitGame, getGameDetails, removeFilledSentences, insertFilledSentence,removeAllPlayers, initializeScores, updatePlayerScore, removePlayer, incrementCurrentPlayerIndex, deleteGame, playAgain, clearFilledSentences } from '../controllers/game.controller.js';
 
 const router = express.Router();
 
@@ -41,6 +41,9 @@ router.post('/play-again', playAgain);
 
 // Route for removing a player
 router.post('/remove-player', removePlayer);
+
+// Route for removing all players
+router.post('/remove-all-players', removeAllPlayers);
 
 
 

@@ -20,9 +20,8 @@ export const EndGame = () => {
         const fetchGame = async () => {
           try {
             const response = await axios.get(`http://localhost:5000/api/game/details/${id}`);
+            await axios.post('http://localhost:5000/api/game/remove-all-players', { gameId: id });
             setGame(response.data.game.scores);
-            // setCurrentRound(response.data.game.currentPlayerIndex);
-            // setMaxRound(response.data.game.sentences.length);
             setGameId(response.data.game._id);
           } catch (error) {
             console.error('Error fetching players:', error);
@@ -30,7 +29,9 @@ export const EndGame = () => {
         };
     
         fetchGame();
-      }, [id]);
+      }, []);
+
+
   return (
     <div className='w-full'>
         <LeaderboardPodium game={game} gameId={gameId} player={authUser} />

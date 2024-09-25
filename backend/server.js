@@ -1,4 +1,3 @@
-
 import express from 'express';
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
@@ -32,32 +31,36 @@ const server = http.createServer(app);
 // Initialize Socket.IO
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:5173","http://localhost:5173/home/fillBlanckGame/66f2e30110c759b93f6e59f3"], // Replace with your frontend URL if needed
+        origin: ["http://localhost:5173"], // Replace with your frontend URL if needed
         methods: ["GET", "POST"]
     }
 });
 
-// Track connected players
-// let connectedPlayers = 0;
-
-let connectedUsers = [];
+// Track connected players by URL
+let connectedUsersByUrl = {};
 
 io.on('connection', (socket) => {
-    // Assume userAuth object is obtained from the authenticated socket
     const userAuth = {
         id: socket.id,
-        username: socket.handshake.query.username || 'Anonymous',
-        // Add other user-related properties as needed
+        username: socket.handshake.query.username,
+        url: socket.handshake.query.url // Assuming the URL is passed in the query
     };
-    
-    connectedUsers.push(userAuth);
-    io.emit('userAuthList', connectedUsers);
-    // console.log('A user connected:', userAuth.username, 'Total users:', connectedUsers.length);
+
+    if (!connectedUsersByUrl[userAuth.url]) {
+        connectedUsersByUrl[userAuth.url] = [];
+    }
+
+    connectedUsersByUrl[userAuth.url].push(userAuth);
+    io.emit('userAuthList', connectedUsersByUrl[userAuth.url]);
+
+    socket.on('startGame', (url) => {
+        console.log("url", url);
+        io.emit('navigate', { url: url });
+    });
 
     socket.on('disconnect', () => {
-        connectedUsers = connectedUsers.filter(user => user.id !== socket.id);
-        io.emit('userAuthList', connectedUsers);
-        // console.log('A user disconnected:', userAuth.username, 'Total users:', connectedUsers.length);
+        connectedUsersByUrl[userAuth.url] = connectedUsersByUrl[userAuth.url].filter(user => user.id !== socket.id);
+        io.emit('userAuthList', connectedUsersByUrl[userAuth.url]);
     });
 });
 

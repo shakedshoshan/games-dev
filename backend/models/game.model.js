@@ -26,6 +26,11 @@ const gameSchema = new mongoose.Schema({
   scores: { 
     type: Map, 
     of: Number 
+  },
+  createdAt: { 
+    type: Date, 
+    default: Date.now, 
+    expires: 60*60*6 // Set the document to expire after 60 seconds (1 minute)
   }
 });
 

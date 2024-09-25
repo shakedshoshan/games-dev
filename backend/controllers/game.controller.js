@@ -159,11 +159,18 @@ export const removeFilledSentences = async (req, res) => {
 
     // Start Generation Here
     export const initializeScores = async (req, res) => {
-      const { gameId } = req.body;
+      const { gameId, onlinePlayers } = req.body;
     
       try {
         const game = await Game.findById(gameId);
         if (game) {
+          // Replace the existing players with the provided onlinePlayers array
+          game.players = onlinePlayers.map(player => ({
+            name: player.name,
+            socketId: player.socketId || '',
+            profilePic: player.profilePic || ''
+          }));
+
           const scores = {};
           game.players.forEach(player => {
             scores[player.name] = 0;
@@ -198,6 +205,7 @@ export const updatePlayerScore = async (req, res) => {
 
     // Verify that the provided string matches the player's specific field (assuming 'identifier')
     // Replace 'identifier' with the actual field name you intend to match with 'string'
+    
     const playerAnswer = game.filledSentence.find(player => player.fillIn === string);
     if (!playerAnswer) {
       return res.status(400).json({ message: 'Provided string does not match the player\'s identifier' });
@@ -312,7 +320,7 @@ export const playAgain = async (req, res) => {
     
 
     // Remove everything except the gameCode
-    game.players = [{ name: playerName, socketId: '', profilePic: profilePic }];
+    game.players.push({ name: playerName, socketId: '', profilePic: profilePic });
     game.sentences = sentences;
     game.filledSentence = [];
     game.currentPlayerIndex = 0;
@@ -348,6 +356,25 @@ export const playAgain = async (req, res) => {
      res.json({ message: 'Player removed successfully' });
    } catch (error) {
      res.status(500).json({ message: 'Error removing player', error });
+   }
+ };
+
+ export const removeAllPlayers = async (req, res) => {
+   const { gameId } = req.body;
+
+   try {
+     const game = await Game.findById(gameId);
+     if (!game) {
+       return res.status(404).json({ message: 'Game not found' });
+     }
+
+     game.players = [];
+
+     await game.save();
+
+     res.json({ message: 'All players removed successfully' });
+   } catch (error) {
+     res.status(500).json({ message: 'Error removing players', error });
    }
  };
 
