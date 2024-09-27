@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import useSignup from "../hooks/useSignup";
 
+/**
+ * Component for user signup functionality
+ * @returns {JSX.Element} A form for user registration with input fields for full name, username, password, confirm password, and gender selection
+ */
 const signup = () => {
 	const [inputs, setInputs] = useState({
 		fullName: "",
@@ -10,6 +14,11 @@ const signup = () => {
 		password: "",
 		confirmPassword: "",
 		gender: "",
+	/**
+	 * Handles the change event of a checkbox input for gender selection.
+	 * @param {string} gender - The selected gender value.
+	 * @returns {void} This function doesn't return a value, it updates the state.
+	 */
 	});
 
 	const { loading, signup } = useSignup();
@@ -18,6 +27,11 @@ const signup = () => {
 		setInputs({ ...inputs, gender });
 	};
 
+	/**
+	 * Handles the form submission for user signup
+	 * @param {Event} e - The form submission event
+	 * @returns {Promise<void>} A promise that resolves when the signup process is complete
+	 */
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		await signup(inputs);
@@ -35,6 +49,11 @@ const signup = () => {
 						<label className='label p-2'>
 							<span className='text-base label-text'>Full Name</span>
 						</label>
+						/**
+						 * Updates the fullName property in the inputs state object when the input value changes
+						 * @param {React.ChangeEvent<HTMLInputElement>} e - The change event object from the input element
+						 * @returns {void} This function doesn't return a value
+						 */
 						<input
 							type='text'
 							placeholder='John Doe'
@@ -48,6 +67,11 @@ const signup = () => {
 						<label className='label p-2 '>
 							<span className='text-base label-text'>Username</span>
 						</label>
+						/**
+						 * Updates the username in the inputs state object
+						 * @param {Object} e - The event object from the input change
+						 * @returns {void} This function does not return a value
+						 */
 						<input
 							type='text'
 							placeholder='johndoe'
@@ -64,8 +88,18 @@ const signup = () => {
 						<input
 							type='password'
 							placeholder='Enter Password'
+							/**
+							 * Updates the confirmPassword field in the inputs state object
+							 * @param {Object} e - The event object from the input change
+							 * @returns {void} This function does not return a value
+							 */
 							className='w-full input input-bordered h-10 rounded-md text-black'
 							value={inputs.password}
+							/**
+							 * Updates the password field in the inputs state object
+							 * @param {Object} e - The event object from the input change
+							 * @returns {void} This function does not return a value
+							 */
 							onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
 						/>
 					</div>
