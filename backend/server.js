@@ -72,7 +72,11 @@ io.on('connection', (socket) => {
 
 app.use(express.static(path.join(__dirname, "frontend/dist")));
 
-app.get("*", (req, res) => res.sendFile(path.join(__dirname, "frontend/dist/index.html")));
+app.get("*", (req, res) => {
+    const filePath = path.join(__dirname, "frontend/dist/index.html");
+    console.log(`Serving file from: ${filePath}`); // Add this line for logging
+    res.sendFile(filePath);
+});
 
 server.listen(PORT, () => {
     connectToMongoDB();
