@@ -30,7 +30,7 @@ const gameSchema = new mongoose.Schema({
   createdAt: { 
     type: Date, 
     default: Date.now, 
-    expires: 60*60*6 // Set the document to expire after 60 seconds (1 minute)
+    expires: '1d' 
   }
 });
 

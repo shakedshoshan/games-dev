@@ -4,9 +4,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { motion } from "framer-motion"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useSocketNav } from '../../hooks/useSocketNav';
 
 
-export function ScoreTable({ game, round, maxRound, gameId }) {
+export function ScoreTable({ game, round, maxRound, gameId, isMainPlayer }) {
+  const { handleStartGame: handleSocketStartGame } = useSocketNav({ url: `/home/fillBlanckGameRun/${gameId}` });
   
   const navigate = useNavigate();
 
@@ -25,18 +27,20 @@ export function ScoreTable({ game, round, maxRound, gameId }) {
   const scores = sortObjectByValue(game);
 
   const handleContinue = () => {
+    
     if (round >= maxRound-1) {
       navigate(`/home/EndGame/${gameId}`);
     } else {
-      
-      axios.post('http://localhost:5000/api/game/increment-current-player-index', { gameId: gameId })
-        .then(response => {
+      if(isMainPlayer){
+        axios.post('http://localhost:5000/api/game/increment-current-player-index', { gameId: gameId })
+          .then(response => {
           console.log('Current player index incremented successfully:', response.data);
+          handleSocketStartGame();
         })
         .catch(error => {
           console.error('Error incrementing current player index:', error);
-        });
-      navigate(`/home/fillBlanckGameRun/${gameId}`);
+          });
+      }
     }
   }
 
@@ -81,9 +85,13 @@ export function ScoreTable({ game, round, maxRound, gameId }) {
         className="flex justify-center"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}>
+          {isMainPlayer ||  (round >= maxRound-1) ? (
         <Button onClick={handleContinue} className="w-full sm:w-auto bg-blue-600 hover:bg-blue-800">
           Continue
         </Button>
+          ) : (
+            <></>
+          )}
       </motion.div>
     </div>
   );

@@ -11,6 +11,7 @@ import { WaitingForPlayers } from '@/components/waiting-component';
 
 
 
+
 export const FillBlankGameRun3 = () => {
     const { id } = useParams();
     const [game, setGame] = useState([]);
@@ -22,6 +23,8 @@ export const FillBlankGameRun3 = () => {
     const onlinePlayers = useSocket(`http://localhost:5000`);
     const [players, setPlayers] = useState([]);
     const [filteredPlayers, setFilteredPlayers] = useState([]);
+    const [isMainPlayer, setIsMainPlayer] = useState(false);
+    
 
     useEffect(() => {
 
@@ -55,16 +58,19 @@ export const FillBlankGameRun3 = () => {
             setMaxRound(response.data.game.sentences.length);
             setGameId(response.data.game._id);
             setPlayers(response.data.game.players);
+            const isMainPlayer = (response.data.game.players.length > 0 && response.data.game.players[0].name === authUser.fullName);
+            setIsMainPlayer(isMainPlayer);
           } catch (error) {
             console.error('Error fetching players:', error);
           }
         };
-    
+
         fetchGame();
+
       }, [showScores]);
 
       useEffect(() => {
-        // const isMainPlayer = players.some(player => player.name === authUser.username);
+        
         const clearFilledSentences = async () => {
             try {
               await axios.post(`http://localhost:5000/api/game/clear-filled-sentences`, { gameId: id });
@@ -81,7 +87,7 @@ export const FillBlankGameRun3 = () => {
     <div className='w-full'>
       { showScores ? (
         <>
-        <ScoreTable game={game} round={currentRound} maxRound={maxRound} gameId={gameId}/>
+        <ScoreTable game={game} round={currentRound} maxRound={maxRound} gameId={gameId} isMainPlayer={isMainPlayer} />
         <ExitButton gameId={gameId} player={authUser} />
         </>
       ) : (

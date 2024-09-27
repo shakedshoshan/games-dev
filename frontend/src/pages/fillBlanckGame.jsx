@@ -14,17 +14,11 @@ export const FillBlankGame = () => {
   const navigate = useNavigate();
 
   const onlinePlayers = useSocket(`http://localhost:5000`);
-//   console.log(onlinePlayers);
-//   const [onlinePlayers, setOnlinePlayers] = useState([]);
+
   const [filteredPlayers, setFilteredPlayers] = useState(players);
   const [isFirstPlayer, setIsFirstPlayer] = useState(false);
   const { handleStartGame: handleSocketStartGame } = useSocketNav({ url: `/home/fillBlanckGameRun/${id}` });
 
-//   useEffect(() => {
-//     const onlinePlayers2 = useSocket(`http://localhost:5000`);
-//     setOnlinePlayers(onlinePlayers2);
-//     console.log(onlinePlayers2);
-//   },[])
 
     
   useEffect(() => {

@@ -14,11 +14,11 @@
       const { updatePlayerScore } = useUpdatePlayerScore();
       const [players, setPlayers] = useState([]);
       const [options, setSentences] = useState([]);
+      const [shuffledSentences, setShuffledSentences] = useState([]);
       const [selectedOption, setSelectedOption] = useState([]);
       const navigate = useNavigate();
       const { id } = useParams();
       const onlinePlayers = useSocket(`http://localhost:5000`);
-      console.log(onlinePlayers);
       const [filteredPlayers, setFilteredPlayers] = useState(players);
       const [showOptions, setShowOptions] = useState(false);
       
@@ -27,7 +27,9 @@
           try {
             const response = await axios.get(`http://localhost:5000/api/game/details/${id}`);
             setPlayers(response.data.game.players);
+            const shuffledSentences = response.data.game.filledSentence.sort(() => Math.random() - 0.5);
             setSentences(response.data.game.filledSentence);
+            setShuffledSentences(shuffledSentences);
           } catch (error) {
             console.error('Error fetching players:', error);
           }
@@ -82,7 +84,7 @@
         {showOptions ? (
           <>
           <div className="w-full max-w-xl space-y-4">
-                      {options.map((option, index) => (
+                      {shuffledSentences.map((option, index) => (
                           <Card
                               key={index}
                               onClick={() => handleOptionClick(option)}

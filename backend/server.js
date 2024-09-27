@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import cors from 'cors';
 import http from 'http';
 import { Server } from 'socket.io';
+import path from "path";
 
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import authRoutes from "./routes/auth.routes.js";
@@ -12,6 +13,8 @@ import fillBlanckRoutes from "./routes/fillBlanck.routes.js";
 
 const app = express();
 dotenv.config();
+
+const __dirname = path.resolve();
 
 // Middleware for handling CORS POLICY
 app.use(cors());
@@ -62,6 +65,12 @@ io.on('connection', (socket) => {
         connectedUsersByUrl[userAuth.url] = connectedUsersByUrl[userAuth.url].filter(user => user.id !== socket.id);
         io.emit('userAuthList', connectedUsersByUrl[userAuth.url]);
     });
+});
+
+app.use(express.static(path.join(__dirname, "/frontend/dist")));
+
+app.get("*", (req, res) => {
+	res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 });
 
 server.listen(PORT, () => {

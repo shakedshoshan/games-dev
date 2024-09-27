@@ -10,11 +10,12 @@ const ExitButton = ({ gameId, player }) => {
     axios.post('http://localhost:5000/api/game/delete-game', { gameId: gameId, name: player.fullName })
       .then(response => {
         console.log('Game deleted successfully:', response.data);
-        navigate('/');
+        
       })
       .catch(error => {
         console.error('Error deleting game:', error);
       });
+      navigate('/');
   };
 
   return (

@@ -25,7 +25,7 @@ export const FillBlankGameRun = () => {
         };
     
         fetchGame();
-      }, [id]);
+      }, []);
   return (
     <div>
         <FillInAnswers sentence={sentences[currentSentence]}  gameId = {gameId} />

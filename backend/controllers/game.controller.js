@@ -242,9 +242,8 @@ export const incrementCurrentPlayerIndex = async (req, res) => {
     }
 
     game.currentPlayerIndex += 1;
-
     await game.save();
-
+    
     res.json({ message: 'Current player index incremented successfully', currentPlayerIndex: game.currentPlayerIndex });
   } catch (error) {
     res.status(500).json({ message: 'Error incrementing current player index', error });
