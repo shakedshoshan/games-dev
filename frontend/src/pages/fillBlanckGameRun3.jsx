@@ -12,6 +12,10 @@ import { WaitingForPlayers } from '@/components/waiting-component';
 
 
 
+/**
+ * Renders the Fill Blank Game component for the third run
+ * @returns {JSX.Element} The rendered Fill Blank Game component
+ */
 export const FillBlankGameRun3 = () => {
     const { id } = useParams();
     const [game, setGame] = useState([]);
@@ -22,6 +26,12 @@ export const FillBlankGameRun3 = () => {
     const [showScores, setShowScores] = useState(false);
     const onlinePlayers = useSocket(`http://localhost:5000`);
     const [players, setPlayers] = useState([]);
+    /**
+     * Updates the filtered players list based on online players
+     * @param {Array} players - The list of all players
+     * @param {Array} onlinePlayers - The list of currently online players
+     * @returns {void} This effect does not return a value, but updates the state
+     */
     const [filteredPlayers, setFilteredPlayers] = useState([]);
     const [isMainPlayer, setIsMainPlayer] = useState(false);
     
@@ -29,7 +39,26 @@ export const FillBlankGameRun3 = () => {
     useEffect(() => {
 
       if (players.length > 0) {
+        /**
+         * Filters and updates players based on online status
+         * @param {Array} players - Array of player objects to be filtered
+         * @param {Array} onlinePlayers - Array of online player objects
+         /**
+          * A React effect hook that sets the showScores state based on filtered players
+          * @param {Array} filteredPlayers - The array of filtered players
+          * @param {Array} players - The array of all players
+          * @param {Function} setShowScores - State setter function for showScores
+          * @returns {undefined} This effect does not return a value
+          */
+         * @returns {Array} Array of filtered and updated player objects
+         */
         const filteredPlayers2 = Array.isArray(players) ? players.filter(player => 
+            /**
+             * Finds a matching online player and assigns their socket ID to the player object
+             * @param {Array} onlinePlayers - An array of online player objects
+             * @param {Object} player - The player object to update
+             * @returns {boolean} Returns true if a matching player is found, false otherwise
+             */
             onlinePlayers.some(onlinePlayer => {
               if (onlinePlayer.username === player.name) {
                 player.socketId = onlinePlayer.id;
@@ -49,7 +78,17 @@ export const FillBlankGameRun3 = () => {
       }
     }, [filteredPlayers]);
 
+    /**
+     * Fetches game details and updates the component state
+     * @param {void} - This effect doesn't take any parameters
+     * @returns {void} This effect doesn't return anything
+     */
     useEffect(() => {
+        /**
+         * Asynchronously fetches game details from the server and updates the component state.
+         * @param {void} - This function doesn't take any parameters.
+         * @returns {Promise<void>} A promise that resolves when the game details are fetched and state is updated.
+         */
         const fetchGame = async () => {
           try {
             const response = await axios.get(`http://localhost:5000/api/game/details/${id}`);
@@ -69,8 +108,19 @@ export const FillBlankGameRun3 = () => {
 
       }, [showScores]);
 
+      /**
+       * Clears filled sentences when showScores is true
+       * @param {boolean} showScores - Indicates whether scores are being shown
+       * @param {string} id - The ID of the current game
+       * @returns {void} This effect does not return anything
+       */
       useEffect(() => {
         
+        /**
+         * Clears filled sentences for a specific game
+         * @param {void} - This function doesn't take any parameters
+         * @returns {Promise<void>} A promise that resolves when the operation is complete
+         */
         const clearFilledSentences = async () => {
             try {
               await axios.post(`http://localhost:5000/api/game/clear-filled-sentences`, { gameId: id });

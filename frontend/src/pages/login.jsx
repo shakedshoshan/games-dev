@@ -2,12 +2,23 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import useLogin from "../hooks/useLogin";
 
+/**
+ * Login component for SocialGames application
+ * Renders a login form with username and password inputs
+ * Handles form submission and user authentication
+ * @returns {JSX.Element} A styled login form with input fields and a submit button
+ */
 const Login = () => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 
 	const { loading, login } = useLogin();
 
+	/**
+	 * Handles the form submission for user login.
+	 * @param {Event} e - The form submission event.
+	 * @returns {Promise<void>} A promise that resolves when the login process is complete.
+	 */
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		await login(username, password);
@@ -26,6 +37,11 @@ const Login = () => {
 						<label className='label p-2'>
 							<span className='text-base label-text'>Username</span>
 						</label>
+						/**
+						 * Event handler for username input changes
+						 * @param {React.ChangeEvent<HTMLInputElement>} e - The change event object
+						 * @returns {void} This function does not return a value
+						 */
 						<input
 							type='text'
 							placeholder='Enter username'
@@ -44,6 +60,11 @@ const Login = () => {
 							placeholder='Enter Password'
 							className='w-full input input-bordered h-10 rounded-md text-black'
 							value={password}
+							/**
+							 * Handles the change event for the password input field
+							 * @param {React.ChangeEvent<HTMLInputElement>} e - The change event object
+							 * @returns {void} This function doesn't return a value
+							 */
 							onChange={(e) => setPassword(e.target.value)}
 						/>
 					</div>

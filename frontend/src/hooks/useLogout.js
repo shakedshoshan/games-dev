@@ -6,6 +6,11 @@ const useLogout = () => {
 	const [loading, setLoading] = useState(false);
 	const { setAuthUser } = useAuthContext();
 
+	/**
+	 * Performs user logout operation asynchronously
+	 * @param {void} - This function doesn't take any parameters
+	 * @returns {Promise<void>} A promise that resolves when the logout process is complete
+	 */
 	const logout = async () => {
 		setLoading(true);
 		try {
