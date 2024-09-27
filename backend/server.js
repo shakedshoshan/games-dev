@@ -5,6 +5,10 @@ import cors from 'cors';
 import http from 'http';
 import { Server } from 'socket.io';
 import path from "path";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename); 
 
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import authRoutes from "./routes/auth.routes.js";
@@ -13,8 +17,6 @@ import fillBlanckRoutes from "./routes/fillBlanck.routes.js";
 
 const app = express();
 dotenv.config();
-
-const __dirname = path.resolve();
 
 // Middleware for handling CORS POLICY
 app.use(cors());
