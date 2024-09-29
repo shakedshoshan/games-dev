@@ -7,11 +7,9 @@ import { Server } from 'socket.io';
 import path from "path";
 import { fileURLToPath } from 'url';
 
-
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.join(path.dirname(__filename), '..', '..', 'frontend');
+const __dirname = path.join(path.dirname(__filename), '..', 'frontend');
 console.log(__dirname);
-
 
 import connectToMongoDB from "./db/connectToMongoDB.js";
 import authRoutes from "./routes/auth.routes.js";
@@ -73,10 +71,10 @@ io.on('connection', (socket) => {
 });
 
 // Serve static files from the frontend
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
+app.use(express.static(path.join(__dirname, "dist")));
 
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+    res.sendFile(path.join(__dirname, "dist/index.html"));
 });
 
 server.listen(PORT, () => {
