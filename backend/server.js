@@ -72,12 +72,11 @@ io.on('connection', (socket) => {
     });
 });
 
-app.use(express.static(path.join(__dirname, "/dist")));
+// Serve static files from the frontend
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 app.get("*", (req, res) => {
-    const filePath = path.join(__dirname, "/dist/index.html");
-    console.log(`Serving file from: ${filePath}`); // Add this line for logging
-    res.sendFile(filePath);
+    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
 
 server.listen(PORT, () => {
