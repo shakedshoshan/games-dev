@@ -37,7 +37,7 @@ const server = http.createServer(app);
 // Initialize Socket.IO
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:5173"], // Replace with your frontend URL if needed
+        origin: ["http://localhost:5173","https://games-dev-fixx.onrender.com/"], 
         methods: ["GET", "POST"]
     }
 });
