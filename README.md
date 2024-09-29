@@ -4,7 +4,7 @@ A multiplayer word game built with the MERN stack, where players take turns fill
 
 ## Description
 
-"Fill in the Blanks" is a digital adaptation of the classic Mad Libs game. Players are presented with sentences containing blanks for different parts of speech (e.g., nouns, adjectives, verbs). They take turns filling in these blanks with random words, resulting in often funny and absurd sentences.
+Players are presented with sentences containing blanks for different parts of speech (e.g., nouns, adjectives, verbs). They take turns filling in these blanks with random words, resulting in often funny and absurd sentences.
 
 ### Gameplay
 
