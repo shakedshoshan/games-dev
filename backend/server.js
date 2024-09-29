@@ -20,7 +20,10 @@ const app = express();
 dotenv.config();
 
 // Middleware for handling CORS POLICY
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:5173", "https://games-dev-fixx.onrender.com"],
+    credentials: true
+}));
 
 const PORT = process.env.PORT || 5000;
 
@@ -37,8 +40,9 @@ const server = http.createServer(app);
 // Initialize Socket.IO
 const io = new Server(server, {
     cors: {
-        origin: ["http://localhost:5173","https://games-dev-fixx.onrender.com/"], 
-        methods: ["GET", "POST"]
+        origin: ["http://localhost:5173", "https://games-dev-fixx.onrender.com"], 
+        methods: ["GET", "POST"],
+        credentials: true
     }
 });
 
