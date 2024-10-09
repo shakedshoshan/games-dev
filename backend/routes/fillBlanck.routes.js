@@ -1,5 +1,6 @@
 import express from 'express';
 const router = express.Router();
+import protectRoute from '../middleware/protectRoute.js';
 import { getRandomSentences, addSentences } from '../controllers/fillBlanck.controller.js';
 
 // Route to get X random sentences
